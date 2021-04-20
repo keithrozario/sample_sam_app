@@ -1,1 +1,1 @@
-numpy
+aws-lambda-powertools

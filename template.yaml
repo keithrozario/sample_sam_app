@@ -13,7 +13,7 @@ Globals:
 Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
+    Properties: 
       CodeUri: functions/
       Handler: hello.main
       Runtime: python3.8
@@ -26,33 +26,28 @@ Resources:
             Method: get
             Auth:
               ApiKeyRequired: true
+              
 
 
   GoodbyeWorldFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function
     Properties:
       CodeUri: functions/
       Handler: goodbye.main
       Runtime: python3.8
+      MemorySize: 256
+      Timeout: 5
+      Environment:
+        Variables:
+          POWERTOOLS_LOGGER_LOG_EVENT: True
       Events:
         HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api
           Properties:
             Path: /goodbye
             Method: get
-
-  NumpyFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: functions/
-      Handler: np_array.main
-      Runtime: python3.8
-      Events:
-        HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /npArray
-            Method: get
+            Auth:
+              ApiKeyRequired: true
 
   ApiKey: 
     Type: AWS::ApiGateway::ApiKey
@@ -89,9 +84,6 @@ Resources:
       UsagePlanId: !Ref ApiUsagePlan
 
 Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   HelloWorldApi:
     Description: "API Gateway endpoint URL for Prod stage for Hello World function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"

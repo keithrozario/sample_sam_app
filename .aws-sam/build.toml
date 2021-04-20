@@ -6,6 +6,6 @@ codeuri = "functions/"
 runtime = "python3.8"
 source_md5 = ""
 packagetype = "Zip"
-functions = ["HelloWorldFunction", "GoodbyeWorldFunction", "NumpyFunction"]
+functions = ["HelloWorldFunction", "GoodbyeWorldFunction"]
 
 [layer_build_definitions]
