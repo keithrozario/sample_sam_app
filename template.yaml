@@ -32,19 +32,19 @@ Resources:
   GoodbyeWorldFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: functions/
-      Handler: goodbye.main
+      CodeUri: functions/  # Directory that has the functions
+      Handler: goodbye.main  # <Python file name>.<method> 
       Runtime: python3.8
       MemorySize: 256
       Timeout: 5
-      Environment:
+      Environment:  # Sets environment variables of the Lambda function
         Variables:
-          POWERTOOLS_LOGGER_LOG_EVENT: True
+          POWERTOOLS_LOGGER_LOG_EVENT: True  # causes the event to be logged into cloudwatch (disable for production)
       Events:
         HelloWorld:
           Type: Api
           Properties:
-            Path: /goodbye
+            Path: /goodbye 
             Method: get
             Auth:
               ApiKeyRequired: true
